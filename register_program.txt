@@ -1,0 +1,18 @@
+for registers a and b
+
+increment a
+increment b
+decriment b
+decriment b
+halt
+
+
+a =2
+b=3
+
+dec b
+inc a
+jmz b 13
+halt
+a 5
+b 0
