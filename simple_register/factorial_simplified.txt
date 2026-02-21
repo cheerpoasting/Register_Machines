@@ -1,0 +1,60 @@
+register counter argument_1 argument_2 argument_2_copy total
+
+# space for initial factorial setup: do not delete empty lines or the program numbers will get messed up!
+increment counter
+increment counter
+increment counter
+increment counter
+increment counter
+
+
+
+
+
+
+
+
+
+
+# check if the initial factorial is zero - skip if true
+jump_if_not_zero counter 25
+halt
+#{'counter': 4, 'argument_1': 0, 'argument_2': 0, 'argument_2_copy': 0, 'total': 0}
+
+# set up intial arguments
+decrement counter
+increment argument_1
+increment argument_2
+jump_if_not_zero counter 25
+decrement argument_2
+#{'counter': 0, 'argument_1': 4, 'argument_2': 3, 'argument_2_copy': 0, 'total': 0}
+
+# multiplication
+decrement argument_1
+decrement argument_2
+increment argument_2_copy
+increment total
+jump_if_not_zero argument_2 34
+increment argument_2
+decrement argument_2_copy
+jump_if_not_zero argument_2_copy 38
+jump_if_not_zero argument_1 33
+# {'counter': 0, 'argument_1': 0, 'argument_2': 3, 'argument_2_copy': 0, 'total': 12}
+
+#reset for next pass: move total to argument 1, decrease argument_2
+decrement total
+increment argument_1
+jump_if_not_zero total 45
+decrement argument_2
+# {'counter': 0, 'argument_1': 12, 'argument_2': 2, 'argument_2_copy': 0, 'total': 0}
+
+# do loop
+jump_if_not_zero argument_2 33
+
+# move total 
+decrement argument_1
+increment total
+jump_if_not_zero argument_1 55
+# {'counter': 0, 'argument_1': 0, 'argument_2': 0, 'argument_2_copy': 0, 'total': 24}
+
+halt

@@ -1,0 +1,80 @@
+register initial_factorial initial_factorial_copy argument_1 argument_2 argument_2_copy current_total true_total
+
+# space for initial factorial setup: do not delete empty lines or the program numbers will get messed up!
+increment initial_factorial
+increment initial_factorial
+increment initial_factorial
+increment initial_factorial
+
+
+
+
+
+
+
+
+
+
+
+
+# check if the initial factorial is zero - skip if true
+jump_if_not_zero initial_factorial 25
+halt
+# {'initial_factorial': 4, 'initial_factorial_copy': 0, 'argument_1': 0, 'argument_2': 0, 'argument_2_copy': 0, 'current_total': 0, 'true_total': 0}
+
+# set up the initial factorial settings (not repeated!)
+decrement initial_factorial
+increment initial_factorial_copy
+increment argument_1
+increment argument_2
+jump_if_not_zero initial_factorial 25
+decrement argument_2 
+# {'initial_factorial': 0, 'initial_factorial_copy': 4, 'argument_1': 4, 'argument_2': 3, 'argument_2_copy': 0, 'current_total': 0, 'true_total': 0}
+
+# if argument_1 or 2 is somehow 0, end program
+jump_if_not_zero argument_1 40
+jump_if_not_zero argument_2 40
+halt
+
+#begin first pass of addition
+decrement argument_1
+decrement argument_2
+increment argument_2_copy
+increment current_total
+jump_if_not_zero argument_2 41
+# {'initial_factorial': 0, 'initial_factorial_copy': 4, 'argument_1': 3, 'argument_2': 0, 'argument_2_copy': 3, 'current_total': 3, 'true_total': 0}
+
+#set up second pass
+decrement argument_2_copy
+increment argument_2 
+jump_if_not_zero argument_2_copy 48
+# {'initial_factorial': 0, 'initial_factorial_copy': 4, 'argument_1': 3, 'argument_2': 3, 'argument_2_copy': 0, 'current_total': 3, 'true_total': 0}
+
+# loop addition pass
+jump_if_not_zero argument_1 40
+# {'initial_factorial': 0, 'initial_factorial_copy': 4, 'argument_1': 0, 'argument_2': 3, 'argument_2_copy': 0, 'current_total': 12, 'true_total': 0}
+
+# decrease initial_factorial_copy, check if zero; adjust argument_2
+decrement initial_factorial_copy
+decrement argument_2
+jump_if_not_zero initial_factorial_copy 65
+halt
+#{'initial_factorial': 0, 'initial_factorial_copy': 3, 'argument_1': 0, 'argument_2': 2, 'argument_2_copy': 0, 'current_total': 12, 'true_total': 0}
+
+# next move current_total to argument_1
+decrement current_total
+increment argument_1
+jump_if_not_zero current_total 65
+# {'initial_factorial': 0, 'initial_factorial_copy': 3, 'argument_1': 12, 'argument_2': 2, 'argument_2_copy': 0, 'current_total': 0, 'true_total': 0}
+
+# loop addition
+jump_if_not_zero argument_2 39
+
+# give total 
+decrement initial_factorial_copy
+increment true_total
+decrement argument_1
+jump_if_not_zero argument_1 75
+# {'initial_factorial': 0, 'initial_factorial_copy': 0, 'argument_1': 0, 'argument_2': 0, 'argument_2_copy': 0, 'current_total': 0, 'true_total': 24}
+
+halt

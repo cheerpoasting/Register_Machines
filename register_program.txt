@@ -1,7 +1,0 @@
-register a b
-
-increment a
-increment b
-decrement b
-decrement b
-halt

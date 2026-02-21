@@ -1,0 +1,33 @@
+register a b c d
+
+increment a
+increment a
+increment a
+increment a
+increment a
+increment a
+increment a
+increment a
+increment a
+increment a
+increment a
+
+increment b
+increment b
+increment b
+
+decrement a
+decrement a
+decrement a
+decrement b
+increment c
+jump_if_not_zero b 19
+
+jump_if_not_zero a 29
+halt
+
+increment d
+decrement a
+jump_if_not_zero a 29
+
+halt

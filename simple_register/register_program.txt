@@ -1,0 +1,8 @@
+register a b
+
+increment b
+increment b
+increment a
+decrement b
+jump_if_not_zero b 5
+halt
