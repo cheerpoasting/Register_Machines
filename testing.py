@@ -4,7 +4,7 @@
 # 
 #####
 
-import initial_implimentation
+import utils.open_file as open_file
 import tempfile
 import os
 
@@ -16,13 +16,12 @@ def normal_opening():
 
         with open(filepath, "w") as file:
             file.write("hello world")
-
-        result = initial_implimentation.openfile(filepath)
+        result = open_file.openfile(filepath)
         assert result == "hello world", f"expected 'hello world', got {result!r}"
 
 def file_not_found():
     try:
-        initial_implimentation.openfile("nonexistant.txt")
+        open_file.openfile("nonexistant.txt")
         assert False, "Expected FileNotFound but nothing was raised"
     except SystemExit as e:
         assert e.code == 404, f"Expected exit code 404, got {e.code}"
@@ -35,7 +34,7 @@ def file_is_empty():
             with open(filepath, "w") as file:
                 file.write("")
 
-            initial_implimentation.openfile(filepath)
+            open_file.openfile(filepath)
             assert False, "Expected EmptyFile but nothing was Raised"
     except SystemExit as e:
         assert e.code == 204, f"Expected exit code 204, got {e.code}"
@@ -48,7 +47,7 @@ def wrong_encoding():
             with open(filepath, "wb") as file: #wb = write binary
                 file.write(b"\xe9")
 
-            initial_implimentation.openfile(filepath)
+            open_file.openfile(filepath)
             assert False, "Expected UnicodeError but nothing was Raised"
     except SystemExit as e:
         assert e.code == 415, f"Expected exit code 415, got {e.code}"
@@ -61,7 +60,7 @@ def wrong_extension():
             with open (filepath, "w") as file:
                 file.write("invalid extension")
 
-            initial_implimentation.openfile(filepath)
+            open_file.openfile(filepath)
             assert False, "Expected WrongExtension but nothing was Raised"
     except SystemExit as e:
         assert e.code == 415, f"Expected exit code 415, got {e.code}"
@@ -71,7 +70,7 @@ def wrong_extension():
 def open_directory():
     try:
         with tempfile.TemporaryDirectory() as temp_directory:
-            initial_implimentation.openfile(temp_directory)
+            open_file.openfile(temp_directory)
             assert False, "Expected PermissionError but nothing was Raised"
     except SystemExit as e:
         assert e.code == 400, f"Expected exit code 400, got {e.code}"
@@ -87,6 +86,13 @@ file_handling_tests = [
 
 file_handling_tests_passed = 0
 file_handling_tests_number = len(file_handling_tests)
+
+
+
+
+
+
+
 
 def final_report():
     all_tests_passed = file_handling_tests_passed
