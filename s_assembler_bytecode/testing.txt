@@ -1,1 +1,5 @@
 register a b c
+add a b c
+_addition_loop
+jump_if a not 0 _addition_loop
+halt
