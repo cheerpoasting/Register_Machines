@@ -1,4 +1,4 @@
-register argument_1 argument_2 argument_2_copy total
+register argument_1 argument_2 total
 
 _initial_setup
 increment 4 argument_1

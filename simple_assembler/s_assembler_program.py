@@ -69,14 +69,15 @@ def run_instructions(registers, labels, instructions):
                 i += 1
         elif re.match(r"decrement", instructions[i]):
             decrement_instructions = instructions[i].split()
-            target_amount = decrement_instructions[1]
+            amount = decrement_instructions[1]
             target_register = decrement_instructions[2]
-            if registers[target_register] > 0:
-                registers[target_register] -= int(target_amount)
-                i += 1
+            if amount.isdigit():
+                registers[target_register] -= int(amount)
             else:
+                registers[target_register] -= registers[amount]
+            if registers[target_register] < 1:
                 registers[target_register] = 0
-                i += 1
+            i += 1
         elif re.match(r"move", instructions[i]):
             move_instructions = instructions[i].split()
             amount = move_instructions[1]
