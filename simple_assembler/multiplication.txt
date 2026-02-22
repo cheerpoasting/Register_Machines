@@ -1,0 +1,11 @@
+register a b c
+
+increment 5 a
+increment 3 b
+
+_multiplication_loop
+decrement 1 a
+increment b c
+jump_if_not_zero a _multiplication_loop
+
+halts

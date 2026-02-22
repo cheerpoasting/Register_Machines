@@ -1,0 +1,24 @@
+register argument_1 argument_2 argument_2_copy total
+
+_initial_setup
+increment 4 argument_1
+jump_if_not_zero argument_1 _initial_arguments
+
+_initial_arguments
+increment argument_1 argument_2
+decrement 1 argument_2
+jump_if_not_zero argument_2 _multiplication_loop
+
+_multiplication_loop
+decrement 1 argument_1
+increment argument_2 total
+jump_if_not_zero argument_1 _multiplication_loop
+
+_intermediate_setup
+move total argument_1
+decrement 1 argument_2
+jump_if_not_zero argument_2 _multiplication_loop
+
+move argument_1 total
+
+halt

@@ -1,11 +1,8 @@
 register a b c
-_section_1
+
 increment 2 a
-increment 5 b
-_section_2
-move 4 c
-move b c
-_section_3
-decrement 1 a
-jump_if_not_zero a _section_3
+increment 3 b
+increment a c
+increment b c
+
 halt

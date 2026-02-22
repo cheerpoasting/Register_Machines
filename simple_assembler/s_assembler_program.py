@@ -5,7 +5,6 @@
 #           - Accept an arbitrary number of registers.
 #           - Support labels and comments.
 #           - Support the following commands: increment, decrement, move, jump_if_not_zero, halt.
-#           - NOTE: move should support both numbers and registers! ex move 4 rdx, move rdi rdx
 #       The program should end by returning the final status of all registers created.
 #
 #####
@@ -56,15 +55,18 @@ def initalize_labels(instructions):
 def run_instructions(registers, labels, instructions):
     i = 1
     while i in instructions:
-        print(i, instructions[i])
         if re.match(r"register", instructions[i]):
             i += 1
         elif re.match(r"increment", instructions[i]):
             increment_instructions = instructions[i].split()
-            target_amount = increment_instructions[1]
+            amount = increment_instructions [1]
             target_register = increment_instructions[2]
-            registers[target_register] += int(target_amount)
-            i += 1
+            if amount.isdigit():
+                registers[target_register] += int(amount)
+                i += 1
+            else:
+                registers[target_register] += registers[amount]
+                i += 1
         elif re.match(r"decrement", instructions[i]):
             decrement_instructions = instructions[i].split()
             target_amount = decrement_instructions[1]
@@ -83,8 +85,13 @@ def run_instructions(registers, labels, instructions):
                 registers[target_register] = int(amount)
             else:
                 registers[target_register] =registers[amount]
+                registers[amount] = 0
             i +=1
+        elif re.match(r"#", instructions[i]):
+            i += 1
         elif re.match(r"_", instructions[i]):
+            i += 1
+        elif not instructions[i].strip():
             i += 1
         elif re.match(r"jump_if_not_zero", instructions[i]):
             jump_instructions = instructions[i].split()
@@ -95,11 +102,12 @@ def run_instructions(registers, labels, instructions):
         elif re.match(r"halt", instructions[i]):
             break
         else: 
-            i += 1
+            print(f"Unknown command {instructions[i]}")
+            exit(403)
     return registers
 
 if __name__ == "__main__":
-    target_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "addition.txt")
+    target_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "factorial.txt")
     contents = open_file.openfile(target_file)
     instructions = create_instructions(contents)
     registers = initialize_registers(instructions)
