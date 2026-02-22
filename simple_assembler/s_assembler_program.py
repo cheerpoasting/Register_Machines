@@ -108,7 +108,7 @@ def run_instructions(registers, labels, instructions):
     return registers
 
 if __name__ == "__main__":
-    target_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "factorial.txt")
+    target_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "multiplication.txt")
     contents = open_file.openfile(target_file)
     instructions = create_instructions(contents)
     registers = initialize_registers(instructions)

@@ -8,4 +8,4 @@ decrement 1 a
 increment b c
 jump_if_not_zero a _multiplication_loop
 
-halts
+halt
