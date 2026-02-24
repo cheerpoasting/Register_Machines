@@ -4,7 +4,7 @@ A collection of small experiments in building programming languages.
 ## Overview
 I want to learn how to create a fully functional programming language, so I'm starting small with a minimal register machine and building up complexity with each project by adding abstractions like labels, higher-level instructions, and eventually functions and bytecode.
 
-## Projects
+## Register Projects
 
 ### Simple_Register
 This project creates a simple register machine that accepts an arbitrary number of registers, and recognizes 4 functions: increment, decrement, jump_if_not_zero, and halt. It also supports comments. 
@@ -75,8 +75,21 @@ VALID EXAMPLES:
 
 There are five sample programs for you to view: addition.txt, subtraction.txt multiplication.txt, division.txt, factorial.txt. 
 
+## Stack Projects
+
+### Simple_Stack_Machine
+I created a simple stack machine that reads and processes Reverse Polish notation so that I could learn more about stacks and how they function. This primitive stack machine has no named registers or variables and operates purely based on the top stack values.
+
+#### Usage & Instructions
+- Make sure that the python file correctly targets the .txt file that contains your instruction set
+- Push. Any integer followed by whitespace is automatically pushed onto the stack.
+- Add (+). Use the keyword "+" to pop the top two values off the stack and push their sum. Ex. "3 4 +" results in a top-of-stack 7
+- Subtract (-). Use the keyword "-" to pop the top two values off the stack and push their difference. Ex. "10 4 -" results in a top-of-stack 6. NOTE: Negative numbers are not supported. If the result of subtraction is less than 1, it will be returned as 0.
+
+There are two sample programs for you to view: addition.txt, subtraction.txt
+
 ## What's Next
-- Implementing a stack.
+- Dup, swap, jump_if.
 - Function calls.
 - Print statements.
 - If/else.
