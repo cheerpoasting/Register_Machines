@@ -42,14 +42,22 @@ In order to do more powerful things, I implemented basic logical operators (not,
 - If you wish to view the bytecode, please run `s_assembler_bytecode.py`, and make sure it correctly targets the .txt file that contains your instruction set. If you wish to run the program, run only `s_assembler_interpreter.py` with the correct .txt instruction set targeted. 
 - Declare your registers using the keyword "register", followed by the names of your registers separated by spaces. ex. "register a b c" -- you can create an arbitrary number of registers, whose names can contain any characters. You can only use one register declaration line.
 - Add and subtract. Use the keyword followed by the amount and then the target register. The "amount" can either be a positive integer (add 5 a) OR the value of another register (subtract b a) meaning that we take the value of register b and subtract it from a *non-destructively* (the value in register b remains the same). 
+- Add and Subtract (Long Form). Use the keyword followed by the first amount and second amount, then the target register. For example short form "add a b" is "b = a + b" and the same as long form add a b b. However, "add a b c" will be "c = a + b"
 
 SUBTRACTION NOTE: 
 - "subtract a b c" is equivalent to c = b - a
 - Registers can only be non-negative integers (ie, if your subtraction would create a negative number, it becomes zero instead)
 
-- Multiply and Divide. Use the keyword followed by the amount and then the target register. The "amount" can either be a positive integer OR the value of another register. *non-destructive* NOTE: "divide a b c" is the same as "c = a/b"
+- Multiply and Divide. Use the keyword followed by the amount and then the target register. The "amount" can either be a positive integer OR the value of another register. *non-destructive* NOTE: "divide a b" is the same as "b = a/b"
+- Multiply and Divide (Long Form). Use the keyword followed by the first amount and second amount, then the target register. For example short form "divide a b" is "b = a / b" and the same as long form divide a b b. However, "divide a b c" will be "c = a / b"
+
 - Move. Use the keyword followed by the amount and then the target register. The "amount" can either be a positive integer (move 5 a) OR the value of another register (move b a). This is *destructive* -- if we move 5 to a, then a will equal 5; if we move b to a, then a = b, but b = 0.
-- Jump_if: Use the keyword followed by the register to test, the conditions, then the value to test against, followed by the loop label. The value can either be a positive integer OR the value of another register. Conditions default to "is equal to". Accepts the arguments: not, gt (greater than), lt (less than). If the statement is true, it will jump to the indicated label, otherwise, it will continue to the next set of instructions. 
+- Jump_if: Use the keyword followed by the register to test, the conditions, then the value to test against, followed by the loop label. The value can either be a positive integer OR the value of another register. If the statement is true, it will jump to the indicated label, otherwise, it will continue to the next instruction. 
+
+CONDITIONS:
+- Defaults to "is equal to".
+- Supports: not (!), lt (<), gt (>)
+- "not" must always go before comparisons. 
 
 JUMP LOGIC: 
 - "not" can stand alone. ex. "a not b" is "a != b"
