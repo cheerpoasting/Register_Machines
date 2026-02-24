@@ -18,7 +18,7 @@ class Register:
         self.value = 0
 
     def __repr__(self):
-        return f"Register \"{self.name}\" at  index {self.index} = {self.value}"
+        return f"{self.name} = {self.value}\n"
 
 def init_registers(registers):
     register_list = [Register(name, i) for i, name in enumerate(registers)]
@@ -58,7 +58,9 @@ def op_add(bytecode, instruction_index, registers):
 @register_op_code(2) 
 def op_sub(bytecode, instruction_index, registers):
     primary_value, secondary_value, target_register = common_arithmetic(bytecode, instruction_index, registers)
-    target_register.value = primary_value - secondary_value
+    target_register.value = secondary_value - primary_value
+    if target_register.value < 1:
+        target_register.value = 0
     instruction_index += 6
     return instruction_index
 
@@ -72,7 +74,7 @@ def op_mult(bytecode, instruction_index, registers):
 @register_op_code(4) 
 def op_div(bytecode, instruction_index, registers):
     primary_value, secondary_value, target_register = common_arithmetic(bytecode, instruction_index, registers)
-    target_register.value = primary_value / secondary_value
+    target_register.value = int(primary_value / secondary_value)
     instruction_index += 6
     return instruction_index
 
@@ -87,7 +89,27 @@ def op_mov(bytecode, instruction_index, registers):
 
 @register_op_code(6) 
 def op_jump_if(bytecode, instruction_index, registers):
-    instruction_index += 7
+
+    register_value = registers[bytecode[instruction_index+1]].value
+    is_not = bytecode[instruction_index+2]
+    condition = bytecode[instruction_index+3]
+    operand_type = bytecode[instruction_index+4]
+    if int(operand_type) == 0:# if integer
+        compare_value = bytecode[instruction_index+5]
+    else: #if register
+        compare_value = registers[bytecode[instruction_index+5]].value
+    if condition == 0: 
+        result = register_value == compare_value
+    elif condition == 1:
+        result = register_value > compare_value
+    else: 
+        result = register_value < compare_value
+    if is_not:
+        result = not result
+    if result:
+        instruction_index = bytecode[instruction_index+6]
+    else:
+        instruction_index += 7
     return instruction_index
 
 @register_op_code(7) 
@@ -103,8 +125,7 @@ def parse_and_run(bytecode, registers):
         instruction_index = dispatch[opcode](bytecode, instruction_index, registers)
 
 if __name__ == "__main__":
-    bytecode, registers = compiler.give_bytecode("testing.txt")
+    bytecode, registers = compiler.give_bytecode("factorial.txt")
     registers = init_registers(registers)
-    #print({k: v.__name__ for k, v in dispatch.items()}) #checks dispatch table created correctly
     parse_and_run(bytecode, registers)
 

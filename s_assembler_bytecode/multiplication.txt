@@ -1,0 +1,5 @@
+register value_1 value_2 product
+add 5 value_1
+add 7 value_2
+multiply value_1 value_2 product
+halt

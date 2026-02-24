@@ -100,6 +100,8 @@ def assign_label_indexes(lines):
             index += 1
         elif line.startswith("_"):
             labels[line] = index
+        elif line.startswith("#"):
+            pass
         else:
             print(f"UNKNOWN COMMAND {line}")
             exit(403)
@@ -107,24 +109,33 @@ def assign_label_indexes(lines):
     return labels
 
 def emit_basic_math(bytecode, registers, instruction_list, opcode, name):
-    for item in instruction_list:
+    for i, item in enumerate(instruction_list):
+        # we need "enumerate" in case the register appears in two arguments
+        # otherwise when we check the *first* appearance, it will choose the wrong branch
         if item == name:
+            # name here was passed as the final argument of the function
             bytecode.append(opcode)
         elif item.isdigit():
-            if item == instruction_list[-1]:
+            if i == len(instruction_list) - 1: # check if the final part is a digit instead of register (FORBIDDEN)
                 print(f"{instruction_list}: final argument must be register")
                 exit(403)
-            else:
+            else: # otherwise, treat it as in integer
                 bytecode.append(OPTYPE["IMM"])
                 bytecode.append(int(item))
-        elif item in registers:
-            if len(instruction_list) == 4 and item == instruction_list[-1]:
+        elif item in registers: # if you find the item in the register list
+            if len(instruction_list) == 4 and i == len(instruction_list) - 1:
+                # if there are 4 instructions (add a b c) and this is the last one
+                # just append the register index
                 bytecode.append(registers.index(item))
-            elif len(instruction_list) == 3 and item == instruction_list[-1]:
+            elif len(instruction_list) == 3 and i == len(instruction_list) - 1:
+                # if there are 3 instructions (add a b) and this is the last one
+                # then say that the second argument is a register @ index
                 bytecode.append(OPTYPE["REG"])
                 bytecode.append(registers.index(item))
+                # then indicate that it is also the target register (just by index)
                 bytecode.append(registers.index(item))
             else:
+                # anywhere else, just say it is a register and give its index
                 bytecode.append(OPTYPE["REG"])
                 bytecode.append(registers.index(item))
         else:
@@ -217,7 +228,7 @@ def give_bytecode(file_name):
     return (bytecode, registers)
 
 if __name__ == "__main__":
-    target_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "testing.txt")
+    target_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "division.txt")
     contents = open_file.openfile(target_file)
     lines = seperate_lines(contents)
     registers = assign_registers(lines)

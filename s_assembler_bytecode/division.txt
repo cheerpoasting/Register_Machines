@@ -1,0 +1,22 @@
+register value_1 value_2 whole_result remainder
+
+_initialize
+move 12 value_1
+move 13 value_2
+
+jump_if remainder gt 0 _halt
+jump_if whole_result gt 0 _halt
+
+_whole_result
+divide value_1 value_2 whole_result
+
+_remainder
+move value_1 remainder
+multiply whole_result value_2 value_2
+subtract remainder value_2 remainder
+move 0 value_2
+
+jump_if value_1 0 _initialize
+
+_halt
+halt

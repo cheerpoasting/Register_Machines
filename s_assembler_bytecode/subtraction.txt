@@ -1,0 +1,7 @@
+register value_1 value_2 result
+move 3 value_1
+move 5 value_2
+# NOTE: intended behavior is value_2 - value_1 = result
+# NOTE: registers "bottom out" at 0
+subtract value_1 value_2 result
+halt

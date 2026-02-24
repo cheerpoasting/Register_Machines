@@ -1,0 +1,5 @@
+register value_1 value_2 result
+add 7 value_1
+add 9 value_2
+add value_1 value_2 result
+halt

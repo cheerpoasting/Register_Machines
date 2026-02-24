@@ -1,0 +1,19 @@
+register factorial value_1 value_2 result
+
+move 5 factorial
+
+add factorial value_1
+add factorial value_2
+subtract 1 value_2
+
+_mainloop
+multiply value_1 value_2 result
+subtract 1 value_2
+jump_if value_2 lt 1 _finalize
+move result value_1
+jump_if value_2 gt 0 _mainloop
+
+_finalize
+move 0 value_1
+move 0 value_2
+halt
